@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+</head>
+
+<body>
+  <script type="text/javascript">
+      function extend(obj, deep) {
+          var newObj = {}
+          //判断obj的类型,数组或是对象
+          if (obj instanceof Array) {  //如果是数组
+            newObj = []
+          }
+          //遍历obj,用for...in 虽然性能低,但是唯一可以用的方法
+          for (var key in obj) {
+            var value = obj[key]  //先把值给取出来,在判断拷贝方式和值类型,再决定
+
+            //如果是浅拷贝,就不用考虑值类型,是深层拷贝再看是引用还是什么
+            //!! 强制改变为布尔类型
+            newObj[key] = (!!deep && typeof value === "object" && value !== null) ? extend(value, true) : value
+
+          }
+
+          return newObj
+
+        }
+
+
+    function Person(name) {
+      this.name = name
+    }
+    Person.prototype = {
+      x: [1, 2],
+      say: function () {
+        console.log(this.name)
+      }
+    }
+
+    var p = new Person("zhouwei")
+    // p.say()
+    // p.__proto__.say()
+    // console.log(p.__proto__ === Person.prototype)
+    function P2(name) {
+      Person.call(this, name)
+    }
+      
+    //P2.prototype = extend(Person.prototype,true)
+
+    P2.prototype = new Person()
+    console.log(P2.prototype)
+    P2.prototype.call = function () {
+      console.log(1)
+    }
+    var p2 = new P2("wenhaonan")
+
+    // p2.say()   
+    // p.say()
+    // p2.call()
+    //p.call()
+    // p2.x[1] = 0
+    // console.log(p2.x)
+    // console.log(p.x)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Will</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <span>
+      <input type="text" name="" id="" placeholder="请输入要计算阶乘的值">
+    </span>
+    <span>
+      <button>计算</button>
+    </span>
+  </div>
+  <div class="result"></div>
+  <script>
+    let input = document.getElementsByTagName("input")[0]
+    let btn = document.getElementsByTagName("button")[0]
+    let result = document.getElementsByClassName("result")[0]
+    btn.onclick = function () {
+      let num = input.value.trim()
+      let reg = /^\d+$/
+      if (reg.test(num)) {
+        if (num == 0) {
+          result.innerHTML = "0没有阶乘"
+        }
+        else {
+          result.innerHTML = jiecheng(num * 1)
+        }
+      } else {
+        result.innerHTML = "只能输入数字"
+      }
+    }
+    function factorial() {
+      var obj = {
+      }
+      return function f(num) {
+        if (!num) return
+        let arr = `${num}!`
+        if (obj[arr]) {
+          //如果缓存里有,直接输出
+          return obj[arr]
+        } else if (num === 1) {
+          //num最小值1,返回1
+          return 1
+        } else {
+          //num * num - 1 直到 1
+          obj[arr] = num * f(num - 1)
+          return obj[arr]
+        }
+      }
+    }
+
+    const jiecheng = factorial()
+  </script>
+</body>
+
+</html>

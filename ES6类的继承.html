@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="Keywords" content="will">
+  <meta name='Description' content="will">
+  <title>Will</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    class Person1 {
+      constructor(obj) {
+        this.name = obj.name
+        this.age = obj.age
+      }
+      say() {
+        console.log(this.name)
+      }
+    }
+    let p1 = new Person1({ name: "wen", age: 18 })
+
+    class Person2 extends Person1 {
+      constructor(obj) {
+        super(obj)
+        this.sex = obj.sex
+      }
+      
+    }
+    let p2 = new Person2({ name: "haonan", age: 18, sex: "male" })
+    p2.say()
+  </script>
+</body>
+
+</html>
