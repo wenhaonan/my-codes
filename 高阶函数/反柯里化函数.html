@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Will</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    //方法1
+    Function.prototype.uncurrying = function () {
+      var _this = this;
+      return function () {
+        var obj = Array.prototype.shift.call(arguments);
+        return _this.apply(obj, arguments);
+      };
+    };
+    //方法2
+    Function.prototype.uncurrying2 = function () {
+      var _this = this;
+      return function () {
+        return Function.prototype.call.apply(_this, arguments);
+      }
+    }
+
+    //方法3 封装为一个函数
+    function uncurrying3(fn) {
+      return function () {
+        var obj = Array.prototype.shift.call(arguments);
+        return fn.apply(obj, arguments)
+      }
+    }
+    //方法4
+    function uncurrying4(fn) {
+      return function () {
+        return Function.prototype.call.apply(fn, arguments);
+      }
+    }
+    let push = Array.prototype.push.uncurrying2()
+    let push2 = uncurrying4(Array.prototype.push)
+    //let locase = String.prototype.toLowerCase.currying()
+    let obj = {
+
+    }
+    push2(obj, "a")
+    console.log(obj)  
+  </script>
+</body>
+
+</html>

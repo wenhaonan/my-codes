@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Will</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+
+    function add() {
+      let num = 0
+      for (let i = 0; i < arguments.length; i++) {
+        num += arguments[i]
+      }
+      return num
+    }
+
+    //基础版柯里化函数
+    function currying(fn) {
+      let args = [].slice.call(arguments, 1)
+      return function () {
+        let newArgs = args.concat([].slice.call(arguments))
+        return fn.apply(null, newArgs)
+      }
+    }
+
+    //完整版柯里化函数
+    function curry(fn, minArg) {
+      if (minArg === undefined) minArg = 1
+      function f(fArg) {
+        return function () {
+          let arg = [].slice.call(arguments)
+          let newArgs = fArg.concat(arg)
+          if (newArgs.length >= minArg) {
+            return fn.apply(null, newArgs)
+          } else {
+            return f(newArgs)
+          }
+        }
+      }
+      return f([])
+    }
+    let fn = curry(add, 5)
+    let f = fn(1, 2)
+    console.log(f(3, 4, 5))
+  </script>
+</body>
+
+</html>
